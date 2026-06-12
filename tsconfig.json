@@ -1,11 +1,12 @@
 {
-    "compilerOptions": {
-        "moduleResolution": "node",
-        "resolveJsonModule": true,
-        "esModuleInterop": true,
-        "sourceMap": true,
-        "target": "es6",
-        "strict": true,
-        "jsx": "react"
-    }
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "target": "es6",
+    "strict": true,
+    "jsx": "react-jsx" 
+  }
 }

@@ -3,11 +3,13 @@ import * as React from 'react'
 import * as Index from '../index'
 import * as Hooks from '../hooks'
 
-import * as Core from '@material-ui/core'
-import * as Icons from '@material-ui/icons'
+import * as Core from '@mui/material'
+import * as Icons from '@mui/icons-material'
 
-import * as PopupState from 'material-ui-popup-state/hooks'
-import { useTheme } from '@material-ui/core'
+import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks'
+import { useTheme } from '@mui/material'
+
+type PopupStateType = ReturnType<typeof usePopupState>
 
 interface ConfigProps {
   images: {
@@ -20,7 +22,7 @@ interface ConfigProps {
 }
 
 function Config(props: ConfigProps) {
-  const popupState = PopupState.usePopupState({ variant: 'popover', popupId: 'config' })
+  const popupState = usePopupState({ variant: 'popover', popupId: 'config' })
 
   const [renderConfigOpen, setRenderConfigOpen] = React.useState(false)
 
@@ -53,24 +55,33 @@ function Config(props: ConfigProps) {
 
   return (
     <div style={{ display: 'inline-block' }}>
-      <Core.IconButton color='inherit' style={{ marginRight: -theme.spacing(1.5) }} {...PopupState.bindTrigger(popupState)}>
+      <Core.IconButton color='inherit' style={{ marginRight: -12 }} {...bindTrigger(popupState)} >
         <Icons.MoreVert />
       </Core.IconButton>
       <ConfigMenu
         popupState={popupState}
         onAboutClick={() => setAboutConfigOpen(true)}
         onRenderConfigClick={() => setRenderConfigOpen(true)} />
-      <Core.Dialog fullWidth={true} scroll='paper' open={renderConfigOpen} onClose={closeRenderConfig} title='Render Configuration'>
+      <Core.Dialog fullWidth={true} scroll='paper' open={renderConfigOpen} onClose={closeRenderConfig}>
+        <Core.DialogTitle>Render Configuration</Core.DialogTitle>
         <Core.DialogContent>{generateRenderConfigList()}</Core.DialogContent>
         <Core.DialogActions>
           <Core.Button color='primary' onClick={closeRenderConfig}>OK</Core.Button>
         </Core.DialogActions>
       </Core.Dialog>
-      <Core.Dialog scroll='paper' open={aboutConfigOpen} onClose={closeAboutConfig} title='About Project'>
+      <Core.Dialog scroll='paper' open={aboutConfigOpen} onClose={closeAboutConfig}>
+        <Core.DialogTitle>About Project</Core.DialogTitle>
         <Core.DialogContent>
           <p>
-            Author:&nbsp;zzzz
+            Original Author:&nbsp;zzzz
             (Github:&nbsp;<AuthorGitHub />,&nbsp;MCBBS:&nbsp;<AuthorMCBBS />).
+          </p>
+          <p>
+            Original Project: <OriginalProject />.
+          </p>
+          <p>
+            Contributors:&nbsp;z66n
+            (Github:&nbsp;<ContributorGitHub />).
           </p>
           <p>
             Source Code on <SourceCodeGitHub />, under <SourceCodeLicense />.
@@ -129,14 +140,14 @@ function Watching(props: WatchingProps) {
 }
 
 interface ConfigMenuProps {
-  popupState: PopupState.PopupState
+  popupState: PopupStateType
   onRenderConfigClick(): void
   onAboutClick(): void
 }
 
 function ConfigMenu(props: ConfigMenuProps) {
   return (
-    <Core.Menu {...PopupState.bindMenu(props.popupState)}>
+    <Core.Menu {...bindMenu(props.popupState)}>
       <Core.MenuItem onClick={props.onRenderConfigClick}>Render Configuration</Core.MenuItem>
       <Core.MenuItem onClick={props.onAboutClick}>About Project</Core.MenuItem>
     </Core.Menu>
@@ -157,27 +168,36 @@ function AuthorGitHub(props: {}) {
   return <AboutLink href='https://github.com/ustc-zzzz'>@ustc-zzzz</AboutLink>
 }
 
+function ContributorGitHub(props: {}) {
+  return <AboutLink href='https://github.com/z66n'>@z66n</AboutLink>
+}
+
 function AuthorMCBBS(props: {}) {
   const href = 'https://www.mcbbs.net/?1480882'
   return <AboutLink href={href}>@ustc_zzzz</AboutLink>
 }
 
 function SourceCodeGitHub(props: {}) {
-  const href = 'https://github.com/ustc-zzzz/mcbbs-markdown2bbcode-converter'
+  const href = 'https://github.com/z66n/md2bbcode'
   return <AboutLink href={href}>GitHub</AboutLink>
 }
 
 function SourceCodeLicense(props: {}) {
-  const href = 'https://github.com/ustc-zzzz/mcbbs-markdown2bbcode-converter/blob/master/LICENSE'
+  const href = 'https://github.com/z66n/md2bbcode/blob/master/LICENSE'
   return <AboutLink href={href}>GPL-3.0 License</AboutLink>
 }
 
+function OriginalProject(props: {}) {
+  const href = 'https://github.com/ustc-zzzz/mcbbs-markdown2bbcode-converter'
+  return <AboutLink href={href}>mcbbs-markdown2bbcode-converter</AboutLink>
+}
+
 function ByReact(props: {}) {
-  return <AboutLink href='https://reactjs.org/'>React</AboutLink>
+  return <AboutLink href='https://react.dev/'>React</AboutLink>
 }
 
 function ByMaterialUI(props: {}) {
-  return <AboutLink href='https://www.material-ui.com/'>Material UI</AboutLink>
+  return <AboutLink href='https://mui.com/material-ui/'>Material UI</AboutLink>
 }
 
 function HunluanImg(props: { images: { [key: string]: string } }) {

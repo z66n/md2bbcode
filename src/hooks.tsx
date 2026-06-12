@@ -1,6 +1,7 @@
 import * as React from 'react'
 
-import * as Core from '@material-ui/core'
+import { makeStyles } from '@mui/styles' 
+import { Theme } from '@mui/material/styles'
 
 import Clipboard from 'clipboard'
 
@@ -18,7 +19,7 @@ export const useClipboard = (selector: string, text: () => string): [boolean, ()
   return [state, reset]
 }
 
-export const useRootStyles = Core.makeStyles(theme => ({
+export const useRootStyles = makeStyles<Theme>(theme => ({
   main: {
     position: 'fixed',
     overflowX: 'auto', overflowY: 'hidden',
@@ -29,7 +30,7 @@ export const useRootStyles = Core.makeStyles(theme => ({
   }
 }))
 
-export const useHeaderStyles = Core.makeStyles(theme => ({
+export const useHeaderStyles = makeStyles<Theme>(theme => ({
   titleSuffixSmall: {
     fontSize: '0.625rem',
     whiteSpace: 'nowrap',
@@ -46,7 +47,7 @@ export const useHeaderStyles = Core.makeStyles(theme => ({
   }
 }))
 
-export const useMainStyles = Core.makeStyles(theme => ({
+export const useMainStyles = makeStyles<Theme>(theme => ({
   mainContainer: {
     position: 'absolute',
     width: '100%',
@@ -54,7 +55,7 @@ export const useMainStyles = Core.makeStyles(theme => ({
   },
   mainContainerSmall: {
     position: 'absolute',
-    width: `calc(200% - ${theme.spacing(2.5)}px)`,
+    width: `calc(200% - ${theme.spacing(2.5)})`,
     top: theme.spacing(3), bottom: theme.spacing(3), left: 0, right: 0
   },
   mainPaper: {
@@ -64,11 +65,11 @@ export const useMainStyles = Core.makeStyles(theme => ({
   mainLeft: {
     position: 'absolute',
     overflowX: 'auto', overflowY: 'auto',
-    top: 0, bottom: 0, left: theme.spacing(3), width: `calc(50% - ${theme.spacing(8.75)}px)`
+    top: 0, bottom: 0, left: theme.spacing(3), width: `calc(50% - ${theme.spacing(8.75)})`
   },
   mainRight: {
     position: 'absolute',
     overflowX: 'auto', overflowY: 'auto',
-    top: 0, bottom: 0, width: `calc(50% - ${theme.spacing(8.75)}px)`, right: theme.spacing(3)
+    top: 0, bottom: 0, width: `calc(50% - ${theme.spacing(8.75)})`, right: theme.spacing(3)
   }
 }))

@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import * as Hooks from '../hooks'
 
-import * as Core from '@material-ui/core'
+import * as Core from '@mui/material'
 
 interface MainProps {
   transformer: (markdownText: string) => string
@@ -92,10 +92,18 @@ function OutputArea(props: OutputAreaProps) {
   const commonStyle = { lineHeight: theme.typography.body1.lineHeight, margin: 0, padding: 0, minHeight: '100%' }
   if (props.value) {
     const style: React.CSSProperties = { ...commonStyle, whiteSpace: 'pre' }
-    return <Core.Typography variant='body1'><p style={style}>{props.value}</p></Core.Typography>
+    return (
+      <Core.Typography variant='body1' component='div'>
+        <div style={style}>{props.value}</div>
+      </Core.Typography>
+    )
   } else {
     const style: React.CSSProperties = { ...commonStyle, color: 'rgba(0, 0, 0, 0.3)', userSelect: 'none' }
-    return <Core.Typography variant='body1'><p style={style}>BBCode Output</p></Core.Typography>
+    return (
+      <Core.Typography variant='body1' component='div'>
+        <div style={style}>BBCode Output</div>
+      </Core.Typography>
+    )
   }
 }
 

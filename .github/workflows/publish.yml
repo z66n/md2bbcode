@@ -4,16 +4,44 @@ on:
   push:
     branches: [ master ]
 
+# 设置 GITHUB_TOKEN 权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 确保只有一个部署进程在运行
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v2
-      - run: |
-          npm install
-          npm run build
-      - uses: crazy-max/ghaction-github-pages@v2.5.0
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          build_dir: build
+          node-version: '20' # 👈 明确指定 Node 20 LTS，避免未来默认版本升级导致意外
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci # 使用 npm ci 保证构建环境绝对一致
+      
+      - name: Build
+        run: npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './build'
+          
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4 # 👈 GitHub 官方最新部署 Action

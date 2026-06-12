@@ -1,15 +1,18 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'; 
 
-import * as Styles from '@material-ui/core/styles'
+import * as Styles from '@mui/material/styles'
+import { ThemeProvider as MaterialThemeProvider, createTheme } from '@mui/material/styles'
+import { StylesProvider, ThemeProvider as StylesThemeProvider } from '@mui/styles'
 
-import Marked from 'marked'
+import { marked, Renderer as MarkedRenderer } from 'marked'
 
 import Main from './component/Main'
 import Header from './component/Header'
 
 import RendererConfig from './config/Renderer.json'
 import ImageCollection from './config/ImageCollection.json'
+
 
 export interface RenderConfigCollection {
   [key: string]: {
@@ -30,13 +33,13 @@ export interface Renderer {
 
 const textObject = { text: '' }
 
-const muiTheme = Styles.createMuiTheme({
+const muiTheme = createTheme({
   palette: {
     primary: {
-      main: '#2e7d32'
+      main: '#1E3765'
     },
     secondary: {
-      main: '#2e7d32'
+      main: '#1E3765'
     }
   }
 })
@@ -69,7 +72,7 @@ function getRenderer(preset: string) {
       renderer[key] = func
     }
   }
-  return Object.assign(new Marked.Renderer(), renderer)
+  return Object.assign(new MarkedRenderer(), renderer)
 }
 
 const renderer = getRenderer('default')
@@ -79,19 +82,27 @@ function collectConfig(preset?: string) {
 }
 
 function onTransform(markdownText: string) {
-  return textObject.text = renderer.markdown(Marked(markdownText, {
-    renderer: renderer, breaks: false, gfm: true, tables: true, xhtml: false,
-    pedantic: false, sanitize: false, smartLists: true, smartypants: false
-  }))
+  const result = marked.parse(markdownText, {
+    renderer: renderer,
+    breaks: false 
+  }) as string;
+
+  return (textObject.text = result);
 }
 
 function body() {
   return (
-    <Styles.MuiThemeProvider theme={muiTheme}>
-      <Header configCollector={collectConfig} images={ImageCollection} />
-      <Main transformer={onTransform} />
-    </Styles.MuiThemeProvider>
+    <StylesProvider injectFirst>
+      <StylesThemeProvider theme={muiTheme}>
+        <MaterialThemeProvider theme={muiTheme}>
+          <Header configCollector={collectConfig} images={ImageCollection} />
+          <Main transformer={onTransform} />
+        </MaterialThemeProvider>
+      </StylesThemeProvider>
+    </StylesProvider>
   )
 }
 
-ReactDOM.render(body(), document.body)
+const container = document.getElementById('root');
+const root = createRoot(container!);
+root.render(body());

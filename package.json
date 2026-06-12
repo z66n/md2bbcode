@@ -1,40 +1,46 @@
 {
-  "name": "mcbbs-markdown2bbcode-converter",
+  "name": "md2bbcode",
   "author": "ustc-zzzz",
-  "version": "0.2.0",
+  "contributors": [
+    {
+      "name": "z66n",
+      "email": "47192580+z66n@users.noreply.github.com"
+    }
+  ],
+  "version": "0.3.0",
   "main": "index.js",
-  "description": "The frontend of what converts Github Flavored Markdown to MCBBS Flavored BBCode",
+  "description": "A frontend utility to convert Markdown to Discuz! Flavoured BBCode",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ustc-zzzz/mcbbs-markdown2bbcode-converter.git"
+    "url": "git+https://github.com/z66n/md2bbcode.git"
   },
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/ustc-zzzz/mcbbs-markdown2bbcode-converter/issues"
+    "url": "https://github.com/z66n/md2bbcode/issues"
   },
-  "homepage": "https://github.com/ustc-zzzz/mcbbs-markdown2bbcode-converter#readme",
+  "homepage": "https://github.com/z66n/md2bbcode",
   "dependencies": {
-    "@material-ui/core": "^4.11.4",
-    "@material-ui/icons": "^4.11.2",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^5.18.0",
+    "@mui/material": "^5.18.0",
+    "@mui/styles": "^6.5.0",
     "@types/clipboard": "^2.0.7",
-    "@types/marked": "^0.6.5",
     "clipboard": "^2.0.8",
-    "marked": "^0.7.0",
-    "material-ui-popup-state": "^1.8.3",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "marked": "^12.0.2",
+    "material-ui-popup-state": "^5.3.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/react": "^16.14.8",
-    "@types/react-dom": "^16.9.13",
-    "clean-webpack-plugin": "^3.0.0",
-    "html-webpack-plugin": "^5.3.2",
-    "source-map-loader": "^0.2.4",
-    "ts-loader": "^6.2.2",
-    "typescript": "^3.9.10",
-    "url-loader": "^2.3.0",
-    "webpack": "^5.40.0",
-    "webpack-cli": "^4.7.2"
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "html-webpack-plugin": "^5.6.7",
+    "ts-loader": "^9.6.0",
+    "typescript": "^5.9.3",
+    "webpack": "^5.107.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.2.4"
   },
   "scripts": {
     "build": "webpack --mode=production --progress --color",
