@@ -84,7 +84,7 @@ function collectConfig(preset?: string) {
 function onTransform(markdownText: string) {
   const result = marked.parse(markdownText, {
     renderer: renderer,
-    breaks: false 
+    breaks: true 
   }) as string;
 
   return (textObject.text = result);
