@@ -26,7 +26,7 @@
         "code": "[code]${code}[/code]\\n",
         "blockquote": "[quote]${quote.replace(/\\n+$/,'')}[/quote]\\n",
         "html": "${((d,s)=>d.createElement('span').appendChild(d.createTextNode(s)).parentNode.innerHTML)(document,html)}",
-        "heading": "[size=${[20,18,16,15,14,13][level-1]}px]${text}[/size]\\n\\n",
+        "heading": "[size=${[20,18,17,16,15,14][level-1]}px]${text}[/size]\\n\\n",
         "hr": "[hr]\\n",
         "list": "[list${ordered?'=1':''}]\\n${body.replace(/\\n+$/,'')}\\n[/list]\\n",
         "listitem": "[*]${text.replace(/\\n+$/,'')}\\n",
