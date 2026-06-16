@@ -48,10 +48,10 @@ const renderConfigItem: RenderConfigItem = {}
 
 const renderConfigCollection: RenderConfigCollection = RendererConfig
 
-function getRenderer(preset: string) {
+function getRenderer() {
   const renderer: Renderer = {}
   const prefixes = renderConfigCollection.prefix
-  const suffixes = renderConfigCollection['suffix_' + preset]
+  const suffixes = renderConfigCollection.suffix
   try {
     if (localStorage.renderConfigOverride !== 'true') {
       localStorage.renderConfigOverride = 'false'
@@ -75,7 +75,7 @@ function getRenderer(preset: string) {
   return Object.assign(new MarkedRenderer(), renderer)
 }
 
-const renderer = getRenderer('default')
+const renderer = getRenderer()
 
 function collectConfig(preset?: string) {
   return { renderer: renderConfigItem, text: textObject.text }
